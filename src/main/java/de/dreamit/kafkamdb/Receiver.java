@@ -6,6 +6,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author llorenzen
@@ -23,9 +25,11 @@ import javax.ejb.MessageDriven;
 })
 public class Receiver implements KafkaListener {
 
-    @OnRecord(topics="test")
+    private static final Logger logger = Logger.getLogger(Receiver.class.getName());
+
+    @OnRecord(topics = "test")
     public void receiveMessage(ConsumerRecord record) {
         // Handle record
-        System.out.println("Record = " + record.toString());
+        logger.log(Level.INFO, "Record = " + record.toString());
     }
 }
