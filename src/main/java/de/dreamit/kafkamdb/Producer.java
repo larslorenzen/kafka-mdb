@@ -31,19 +31,6 @@ public class Producer {
     @Resource(lookup = "java:app/kafka/factory")
     private KafkaConnectionFactory factory;
 
-    @PostConstruct
-    public void init() {
-        try (KafkaConnection connection = factory.createConnection()) {
-            connection.send(new ProducerRecord<>("test", "hello", "world"), this::onCompletion);
-            connection.send(new ProducerRecord<>("test", "hello2", "world2"), this::onCompletion);
-            connection.send(new ProducerRecord<>("test", "hello3", "world3"), this::onCompletion);
-            connection.send(new ProducerRecord<>("test", "hello4", "world4"), this::onCompletion);
-            connection.send(new ProducerRecord<>("test", "hello5", "world5"), this::onCompletion);
-        } catch (Exception ex) {
-            logger.log(Level.SEVERE, "Connection to kafka failed", ex);
-        }
-    }
-
     private void onCompletion(RecordMetadata metadata, Exception exception) {
         if (exception != null) {
             logger.log(Level.SEVERE, "Failed to send message", exception);
