@@ -30,6 +30,6 @@ public class Receiver implements KafkaListener {
     @OnRecord(topics = "test")
     public void receiveMessage(ConsumerRecord record) {
         // Handle record
-        logger.log(Level.INFO, "Record = " + record.toString());
+        logger.log(Level.INFO, "Record = {0}", record.toString());
     }
 }
